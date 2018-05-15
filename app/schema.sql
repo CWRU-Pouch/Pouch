@@ -15,20 +15,20 @@ CREATE TABLE categories(
 
 CREATE TABLE transactions(
 	userID INTEGER NOT NULL,
-	amount INTEGER,
+	amount DECIMAL(10,2),
     categoryID INTEGER,
-    datetime TIMESTAMP,
+    datetime DATE,
 	location VARCHAR(50),
     notes VARCHAR(150)
 );
 
 CREATE TABLE budgets(
 	userID INTEGER NOT NULL,
-	clothes INTEGER,
-    food INTEGER,
-    rent INTEGER,
-    entertainment INTEGER,
-    other INTEGER
+	clothes DECIMAL(10,2),
+    food DECIMAL(10,2),
+    rent DECIMAL(10,2),
+    entertainment DECIMAL(10,2),
+    other DECIMAL(10,2)
 );
 
 SELECT * FROM users INNER JOIN transactions ON users.userID=transactions.userID;

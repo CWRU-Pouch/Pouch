@@ -45,4 +45,6 @@ var Budget = sequelize.define("budget", {
     }
 })
 
-module.exports = "budgets";
+return Budget;
+
+module.exports = Budget;

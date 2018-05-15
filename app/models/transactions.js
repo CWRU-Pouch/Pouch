@@ -36,5 +36,6 @@ var Transaction = sequelize.define("transaction", {
     }
 
 })
+return Transaction;
 
-module.exports = transactions;
+module.exports = Transaction;

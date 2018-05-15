@@ -31,4 +31,6 @@ var User = sequelize.define("user", {
 
 });
 
-module.exports = "users";
+return User;
+
+module.exports = User;
