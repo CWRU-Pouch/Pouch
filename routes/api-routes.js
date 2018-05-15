@@ -19,12 +19,12 @@ module.exports = function(app) {
     });
   });
 
-  // checks to see if there is a user with that email and password used during log in
-  app.get("/api/:email/:password", function(req, res) {
+  // log in api path
+  // checks to see if there is a user with that email and returns their information for validation with password
+  app.get("/api/:email", function(req, res) {
     db.transactions.findAll({
       where: {
         email: req.params.email,
-        password: req.params.password
       }
     }).then(function(data){
       res.json(data);
