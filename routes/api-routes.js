@@ -19,7 +19,19 @@ module.exports = function(app) {
     });
   });
 
-  //Create a new expense and add it to expenseData table
+  // checks to see if there is a user with that email and password used during log in
+  app.get("/api/:email/:password", function(req, res) {
+    db.transactions.findAll({
+      where: {
+        email: req.params.email,
+        password: req.params.password
+      }
+    }).then(function(data){
+      res.json(data);
+    });
+  });
+
+  //Create a new expense and add it to transactions table
   app.post("/api/posts/expense", function(req,res){
     db.transactions.create({
       userID: req.body.userID,
@@ -46,7 +58,7 @@ module.exports = function(app) {
   });
 
   //Delete an expense from expenseData
-  //only needs to be passed the unique ID of expenseData 
+  //only needs to be passed the unique transactionID of transactions 
   app.delete("/api/delete/:transactionID", function(req, res) {
     db.transaction.destroy({
       where: {
