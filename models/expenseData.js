@@ -5,10 +5,12 @@ var sequelize = require("../config/connection.js");
 // Creates a expense model that matches up with DB
 var expenseData = sequelize.define("expenseData", {
   ID: {
-    type: Sequelize.STRING
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
   },
   userID: {
-    type: Sequelize.STRING
+    type: Sequelize.INTEGER
   },
   category: {
     type: Sequelize.STRING,

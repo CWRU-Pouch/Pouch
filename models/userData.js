@@ -5,7 +5,9 @@ var sequelize = require("../config/connection.js");
 // Creating userData model to match with userData table from DB
 var userData = sequelize.define("userData", {
   userID: {
-    type: Sequelize.STRING
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
   },
   firstName: {
     type: Sequelize.STRING,
