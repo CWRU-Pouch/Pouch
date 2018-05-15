@@ -3,28 +3,25 @@ var Sequelize = require("sequelize");
 var sequelize = require("../config/connection.js");
 
 // Creates a expense model that matches up with DB
-var expenseData = sequelize.define("expenseData", {
-  ID: {
+var categories = sequelize.define("categories", {
+  categoryID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-    primaryKey: true
-  },
-  userID: {
-    type: Sequelize.INTEGER
   },
   category: {
     type: Sequelize.STRING,
-    defaultValue: "Entertainment"
+    allowNull: false,
+    validate: {
+      len: [1]
+    }
   },
-  price: {
-    type: Sequelize.INTEGER
-  }
+  
 }, {
-  timestamps: true
+  timestamps: false
 });
 
 // Syncs with DB
-expenseData.sync();
+categories.sync();
 
 // Makes the expenseData Model available for other files (will also create a table)
-module.exports = expenseData;
+module.exports = categories;

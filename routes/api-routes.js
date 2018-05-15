@@ -1,16 +1,18 @@
 //Bringing in userData and expenseData models
-var userData = require("../models/userData.js");
-var expenseData = require("../models/expenseData.js");
+var categories = require("../models/categories.js");
+var transactions = require("../models/transactions.js");
+var users = require("../models/users.js");
+var budgets = require("../models/budgets.js");
 var db = require("../models");
 
 // Routes
 module.exports = function(app) {
   // Search for all expenses in one category for one user
-  app.get("/api/:category/:userID", function(req, res) {
-    db.expenseData.findAll({
+  app.get("/api/:categoryID/:userID", function(req, res) {
+    db.transactions.findAll({
       where: {
-        category: req.params.category,
-        userId: req.params.userID
+        categoryID: req.params.categoryID,
+        userID: req.params.userID
       }
     }).then(function(data){
       res.json(data);
@@ -19,10 +21,12 @@ module.exports = function(app) {
 
   //Create a new expense and add it to expenseData table
   app.post("/api/posts/expense", function(req,res){
-    db.expenseData.create({
+    db.transactions.create({
       userID: req.body.userID,
-      category: req.body.category,
-      price: req.body.price
+      categoryID: req.body.categoryID,
+      amount: req.body.amount,
+      location: req.body.location,
+      notes: req.body.notes
     }).then(function(data){
       res.json(data)
     });
@@ -31,9 +35,9 @@ module.exports = function(app) {
   //Create a new user and add it to userData table
   //didnt add in budget category names because we are starting with default values
   app.post("/api/posts/user", function(req,res){
-    db.expenseData.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+    db.users.create({
+      userID: req.body.userID,
+      name: req.body.name,
       email: req.body.email,
       password: req.body.password,
     }).then(function(data){
@@ -43,14 +47,14 @@ module.exports = function(app) {
 
   //Delete an expense from expenseData
   //only needs to be passed the unique ID of expenseData 
-  app.delete("/api/delete/:id", function(req, res) {
-    db.expenseData.destroy({
+  app.delete("/api/delete/:transactionID", function(req, res) {
+    db.transaction.destroy({
       where: {
-        id: req.params.id
+        transactionID: req.params.transactionID
       }
     })
-      .then(function(dbPost) {
-        res.json(dbPost);
+      .then(function(data) {
+        res.json(data);
       });
   });
     
