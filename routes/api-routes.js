@@ -7,24 +7,25 @@ var db = require("../models");
 
 // Routes
 module.exports = function(app) {
+
+
   // Search for all expenses in one category for one user
-  app.get("/api/:categoryID/:userID", function(req, res) {
-    db.transactions.findAll({
+  app.get("/budgets/:userID/", function(req, res) {
+    db.budgets.findOne({
       where: {
-        categoryID: req.params.categoryID,
         userID: req.params.userID
       }
     }).then(function(data){
-      res.json(data);
+      res.render("budgets", {data: data});
     });
   });
 
   // checks to see if there is a user with that email and password used during log in
-  app.get("/api/:email/:password", function(req, res) {
-    db.transactions.findAll({
+  app.get("/", function(req, res) {
+    db.users.findOne({
       where: {
-        email: req.params.email,
-        password: req.params.password
+        email: req.body.email,
+        password: req.body.password
       }
     }).then(function(data){
       res.json(data);
