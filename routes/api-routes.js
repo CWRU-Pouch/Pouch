@@ -9,6 +9,7 @@ var db = require("../models");
 module.exports = function(app) {
 
 
+
   // Search for all expenses in one category for one user
   app.get("/budgets/:userID/", function(req, res) {
     db.budgets.findOne({
