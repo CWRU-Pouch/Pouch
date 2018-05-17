@@ -7,6 +7,8 @@ var exphbs = require("express-handlebars");
 var app = express();
 var PORT = process.env.PORT || 8080;
 
+var db = require("./models");
+
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(express.static("app/public"));
@@ -14,8 +16,9 @@ app.use(express.static("app/public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-require("./app/routes/api-routes.js")(app)
+require("./routes/api-routes.js")(app);
 
+db.sequelize.sync({force: true});
 
 app.listen(PORT, function() {
     console.log("Listening on port " + PORT)

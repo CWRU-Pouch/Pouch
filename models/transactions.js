@@ -1,12 +1,14 @@
-var Sequelize = require("sequelize");
+//var Sequelize = require("sequelize");
 // sequelize (lowercase) references my connection to the DB.
-var sequelize = require("../config/connection.js");
+//var sequelize = require("../config/config.json");
 
 // Creating userData model to match with userData table from DB
+
+module.exports = function(sequelize, Sequelize) {
 var transactions = sequelize.define("transactions", {
   transactionID: {
     type: Sequelize.INTEGER,
-    autoIncrement: true,
+   // autoIncrement: true,
     primaryKey: true
   },
   userID: {
@@ -30,8 +32,14 @@ var transactions = sequelize.define("transactions", {
   timestamps: true
 });
 
+
+return transactions;
+
+
+}
+
 // Syncs with DB
-transactions.sync();
+//transactions.sync();
 
 // Makes the Book Model available for other files (will also create a table)
-module.exports = transactions;
+//module.exports = transactions;
