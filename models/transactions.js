@@ -20,7 +20,8 @@ var transactions = sequelize.define("transactions", {
     validate: {
       min: {
         args: .01,
-        msg: "Please choose a value greater than zero"}
+        msg: "Please choose a value greater than zero"
+      }
     }
   },
   categoryID: {
@@ -30,20 +31,25 @@ var transactions = sequelize.define("transactions", {
   date: {
     type: Sequelize.DATE,
     allowNull: false
-
   },
   location: {
     type: Sequelize.STRING,
     allowNull: true,
     validate: {
-      len: [3]
+      len: {
+        args: [3],
+        msg: "If you're including a location, it must be greater than three characters"
+      }
     }
   },
   notes: {
     type: Sequelize.TEXT,
     allowNull: true,
     validate: {
-      len: [3]
+      len: {
+        args: [3],
+        msg: "If you're including notes, they must be greater than three characters"
+      }
     }
   },
 }, {
