@@ -17,7 +17,10 @@ var users = sequelize.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      len: [1]
+      len: {
+        args: [1],
+        msg: "Your name cannot be blank"
+      }
     }
   },
   email: {
@@ -25,15 +28,24 @@ var users = sequelize.define("users", {
     allowNull: false,
     unique: true,
     validate: {
-      isEmail: true,
-      len: [1]
+      isEmail: {
+        args: true,
+        msg: "Please enter a valid email address"
+      },
+      len: {
+        args: [1],
+        msg: "Please enter a valid email address"
+      }
     }
   },
   password: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      len: [6]
+      len: {
+        args: [6],
+        msg: "Your password must be at least 6 characters"
+      }
     }
   },
 }, {
