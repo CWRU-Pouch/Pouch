@@ -8,8 +8,10 @@ module.exports = function(sequelize, Sequelize) {
 var users = sequelize.define("users", {
   userID: {
     type: Sequelize.INTEGER,
+    allowNull: false,
     //autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   name: {
     type: Sequelize.STRING,
@@ -21,7 +23,9 @@ var users = sequelize.define("users", {
   email: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
     validate: {
+      isEmail: true,
       len: [1]
     }
   },

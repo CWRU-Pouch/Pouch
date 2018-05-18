@@ -8,6 +8,9 @@ module.exports = function(sequelize, Sequelize) {
 var categories = sequelize.define("categories", {
   categoryID: {
     type: Sequelize.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true
    // autoIncrement: true,
   },
   category: {

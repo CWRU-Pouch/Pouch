@@ -15,18 +15,36 @@ var transactions = sequelize.define("transactions", {
     type: Sequelize.INTEGER,
   },
   amount: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10,2),
     allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   categoryID: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
+
+  },
   location: {
     type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      len: [3]
+    }
   },
   notes: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
+    allowNull: true,
+    validate: {
+      len: [3]
+    }
   },
 }, {
   timestamps: true
