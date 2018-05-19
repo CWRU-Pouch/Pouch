@@ -1,7 +1,7 @@
 //Bringing in userData and expenseData models
 var categories = require("../models/categories.js");
 var transactions = require("../models/transactions.js");
-var users = require("../models/users.js");
+var users = require("../models/user.js");
 var budgets = require("../models/budgets.js");
 var db = require("../models");
 var cookieParser = require('cookie-parser');
@@ -85,7 +85,7 @@ module.exports = function (app) {
   }).post(function (req, res) {
     db.users.create({
       email: req.body.email,
-      username: req.body.username,
+      name: req.body.name,
       password: req.body.password
     }).then(function () {
       document.cookie = "userID=" + user.ID;
