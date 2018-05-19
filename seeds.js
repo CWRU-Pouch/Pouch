@@ -1,31 +1,28 @@
 
-
-
  var popTables = function(queryInterface, Sequelize) {
 
-	 queryInterface.bulkInsert('users', [{
+
+	 queryInterface.sequelize.models.users.create( {
 		name: 'John Doe',
 	 	email: 'email@email.com',
 	 	password: 'root'
-	 }]).then(function () {
-	 	queryInterface.bulkInsert('budgets', [{
-	 	//userId: 1,
+	 }).then(function () {
+	 	queryInterface.sequelize.models.budgets.create({
+	 	userId: 1,
 	 	clothes: 75,
 	 	food: 100,
 	 	rent: 300,
 	 	entertainment: 50,
 	 	other: 3000
-	 }]);
+	 });
 
-	 queryInterface.bulkInsert('categories', [{
-	 	category: 'Clothes'
-	 }]);
-
-	 queryInterface.bulkInsert('transactions', [{
+	 queryInterface.sequelize.models.transactions.create( {
 	 	amount: 35,
 	 	location: 'target',
-	 	notes: 'a cute dress'
-	 }]);
+	 	notes: 'a cute dress',
+	 	category: 'CLothes',
+	 	userId: 1,
+	 });
 	 });
 
 }

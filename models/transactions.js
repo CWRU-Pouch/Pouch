@@ -11,6 +11,13 @@ var transactions = sequelize.define("transactions", {
   notes: {
     type: Sequelize.STRING,
   },
+  category: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      len: [1]
+    }
+  },
   createdAt: { 
          type: Sequelize.DATE, 
          defaultValue: Sequelize.NOW 
@@ -27,10 +34,10 @@ var transactions = sequelize.define("transactions", {
 transactions.associate = function(models) {
 
 transactions.belongsTo(models.users, {
-      //  foreignKey: {
-      //    allowNull: false
-      // },
-      constaints: false
+       foreignKey: {
+         allowNull: false
+      },
+      constraints: false
     });
 };
 

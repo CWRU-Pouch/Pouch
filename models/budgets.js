@@ -1,6 +1,7 @@
 
 module.exports = function(sequelize, Sequelize) {
 var budgets = sequelize.define("budgets", {
+
   clothes: {
     type: Sequelize.INTEGER,
     allowNull: false
@@ -28,10 +29,10 @@ var budgets = sequelize.define("budgets", {
 budgets.associate = function(models) {
 
 budgets.belongsTo(models.users, {
-      // foreignKey: {
-      //   allowNull: false
-      // },
-      constaints: false
+       foreignKey: {
+         allowNull: false
+       },
+      constraints: false
     });
 };
 
