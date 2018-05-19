@@ -1,7 +1,7 @@
 //Bringing in userData and expenseData models
 var categories = require("../models/categories.js");
 var transactions = require("../models/transactions.js");
-var users = require("../models/users.js");
+var user = require("../models/user.js");
 var budgets = require("../models/budgets.js");
 var db = require("../models");
 
