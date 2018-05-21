@@ -46,7 +46,6 @@ module.exports = function (app) {
     }
   };
 
-
   // route for Home-Page -- redirects "/" to "/login"
   app.get('/', sessionChecker, function (req, res) {
     res.redirect('/login');
@@ -87,10 +86,10 @@ module.exports = function (app) {
       email: req.body.email,
       name: req.body.name,
       password: req.body.password
-    }).then(function () {
+    }).then(function (user) {
       document.cookie = "userID=" + user.ID;
       req.session.user = user.dataValues;
-      res.redirect('/budgets/' + users.ID);
+      res.redirect('/budgets/' + user.ID);
     })
   })
 
@@ -111,11 +110,6 @@ module.exports = function (app) {
       res.redirect('/login') // if not valid redirect to login page
     }
   });
-
-
-
-
-
 
 
   // Create a new expense and add it to transactions table
