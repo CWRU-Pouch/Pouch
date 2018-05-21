@@ -94,6 +94,18 @@ module.exports = function (app) {
   })
 
 
+  app.route('/signup/submit/budgets').post(function (req, res) {
+    db.budgets.create({
+      clothes: req.body.clothes,
+      food: req.body.food,
+      rent: req.body.rent,
+      entertainment: req.body.entertainment,
+      other: req.body.other
+    }).then(function (user) {
+    })
+  })
+
+
 
   // route for user's budget
   app.get("/budgets/:userID/", function (req, res) {
@@ -108,7 +120,7 @@ module.exports = function (app) {
       }
 
 
-      var getUserData = function(){
+      var getUserData = function () {
         db.users.findOne({
           where: {
             id: req.params.userID
@@ -124,41 +136,41 @@ module.exports = function (app) {
 
       getUserData();
 
-      var getBudgetData = function(){
+      var getBudgetData = function () {
         db.budgets.findOne({
           where: {
             userId: req.params.userID
           }
-      }).then(function (data) {
+        }).then(function (data) {
 
-        userInfo.budgetsData = data;
+          userInfo.budgetsData = data;
 
-      });
+        });
 
-      return userInfo;
+        return userInfo;
 
       }
 
       getBudgetData();
 
-      var getTransactionData = function() {
+      var getTransactionData = function () {
         db.transactions.findAll({
           where: {
             userId: req.params.userID
           }
-      }).then(function (data) {
+        }).then(function (data) {
 
-        userInfo.transactionData = data;
+          userInfo.transactionData = data;
 
-      });
+        });
 
-      return userInfo;
+        return userInfo;
 
       }
 
       getTransactionData();
 
-      res.render("index", {userInfo: userInfo});
+      res.render("index", { userInfo: userInfo });
 
 
 
@@ -169,15 +181,93 @@ module.exports = function (app) {
   });
 
 
-  // Create a new expense and add it to transactions table
-  app.post("/api/posts/expense", function (req, res) {
+  // Create a new expense and add it to transactions table CLOTHES
+  app.post("/api/posts/expense/clothes", function (req, res) {
     if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
         amount: req.body.amount,
         location: req.body.location,
-        notes: req.body.notes
+        notes: req.body.notes,
+        clothes: true
+
+      }).then(function (data) {
+        res.json(data)
+      });
+    } else {
+      res.redirect('/login') // if not valid redirect to login page
+    }
+  });
+
+  // Create a new expense and add it to transactions table FOOD
+  app.post("/api/posts/expense/food", function (req, res) {
+    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+      db.transactions.create({
+        userId: req.body.userID,
+        // categoryID: req.body.categoryID,
+        amount: req.body.amount,
+        location: req.body.location,
+        notes: req.body.notes,
+        food: true
+
+      }).then(function (data) {
+        res.json(data)
+      });
+    } else {
+      res.redirect('/login') // if not valid redirect to login page
+    }
+  });
+
+  // Create a new expense and add it to transactions table RENT
+  app.post("/api/posts/expense/rent", function (req, res) {
+    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+      db.transactions.create({
+        userId: req.body.userID,
+        // categoryID: req.body.categoryID,
+        amount: req.body.amount,
+        location: req.body.location,
+        notes: req.body.notes,
+        rent: true
+
+      }).then(function (data) {
+        res.json(data)
+      });
+    } else {
+      res.redirect('/login') // if not valid redirect to login page
+    }
+  });
+
+  // Create a new expense and add it to transactions table ENTERTAINMENT
+  app.post("/api/posts/expense/entertainment", function (req, res) {
+    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+      db.transactions.create({
+        userId: req.body.userID,
+        // categoryID: req.body.categoryID,
+        amount: req.body.amount,
+        location: req.body.location,
+        notes: req.body.notes,
+        entertainment: true
+
+      }).then(function (data) {
+        res.json(data)
+      });
+    } else {
+      res.redirect('/login') // if not valid redirect to login page
+    }
+  });
+
+  // Create a new expense and add it to transactions table other
+  app.post("/api/posts/expense/other", function (req, res) {
+    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+      db.transactions.create({
+        userId: req.body.userID,
+        // categoryID: req.body.categoryID,
+        amount: req.body.amount,
+        location: req.body.location,
+        notes: req.body.notes,
+        other: true
+
       }).then(function (data) {
         res.json(data)
       });
