@@ -99,16 +99,73 @@ module.exports = function (app) {
   app.get("/budgets/:userID/", function (req, res) {
     if (req.session.user && req.cookies.user_sid) // if the session is valid load up index handlebars with information
     {
-      db.budgets.findOne({
-        where: {
-          userID: req.params.userID
-        }
+
+
+      var userInfo = {
+        userData: {},
+        budgetsData: {},
+        transactionData: {}
+      }
+
+
+      var getUserData = function(){
+        db.users.findOne({
+          where: {
+            id: req.params.userID
+          }
+        }).then(function (data) {
+          userInfo.userData = data;
+
+        });
+
+        return userInfo;
+
+      }
+
+      getUserData();
+
+      var getBudgetData = function(){
+        db.budgets.findOne({
+          where: {
+            userId: req.params.userID
+          }
       }).then(function (data) {
-        res.render("index", { data: data });
+
+        userInfo.budgetsData = data;
+
       });
+
+      return userInfo;
+
+      }
+
+      getBudgetData();
+
+      var getTransactionData = function() {
+        db.transactions.findAll({
+          where: {
+            userId: req.params.userID
+          }
+      }).then(function (data) {
+
+        userInfo.transactionData = data;
+
+      });
+
+      return userInfo;
+
+      }
+
+      getTransactionData();
+
+      res.render("index", {userInfo: userInfo});
+
+
+
     } else {
       res.redirect('/login') // if not valid redirect to login page
     }
+
   });
 
 

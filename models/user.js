@@ -32,8 +32,7 @@ var users = sequelize.define("users", {
 
     });
     users.hasMany(models.transactions, {
-      onDelete: 'CASCADE',
-      as: 'userId'
+      onDelete: 'CASCADE'
 
     });
   };

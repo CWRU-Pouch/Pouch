@@ -8,11 +8,11 @@ module.exports = function(app) {
 
   // index route loads view.html
   app.get("/login", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/login.html"));
+    res.sendFile(path.join(__dirname, "../megan/login.html"));
   });
 
   app.get("/signup", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
+    res.sendFile(path.join(__dirname, "../megan/signup.html"));
   });
 
 
