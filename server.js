@@ -19,6 +19,8 @@ app.set("view engine", "handlebars");
 
 require("./routes/api-routes.js")(app);
 
+require("./routes/html-routes.js")(app);
+
 db.sequelize.sync({force: true}).then(() => {
 	 seeds(db.sequelize.queryInterface, db.Sequelize);
 	app.listen(PORT, function() {
