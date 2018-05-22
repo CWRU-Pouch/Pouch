@@ -6,7 +6,7 @@
 		name: 'John Doe',
 	 	email: 'email@email.com',
 	 	password: 'root'
-	 }).then(function () {
+	 })
 	 	queryInterface.sequelize.models.budgets.create({
 	 	userId: 1,
 	 	clothes: 75,
@@ -14,12 +14,14 @@
 	 	rent: 300,
 	 	entertainment: 50,
 	 	other: 3000
-	 });
-	})
+	 }	)
 
-	
 
-	
+
+
+	 
+
+
 }
 
 

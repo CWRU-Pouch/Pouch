@@ -84,10 +84,10 @@ module.exports = function (app) {
     })
   })
 
-  app.route("/get/id").get(function(req,res){
-    db.users.findOne({
+  app.route("/get/budget/:id").get(function(req,res){
+    db.budgets.findOne({
       where: {
-        email:req.body.email
+        id: req.params.id
       }
     }).then(function(user) {
       res.json(user);
@@ -106,7 +106,8 @@ module.exports = function (app) {
       console.log(user)
     })
   })
- 
+
+  
 
 
 
@@ -187,7 +188,7 @@ module.exports = function (app) {
 
   // Create a new expense and add it to transactions table CLOTHES
   app.post("/api/posts/expense/clothes", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
@@ -199,14 +200,14 @@ module.exports = function (app) {
       }).then(function (data) {
         res.json(data)
       });
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
   // Create a new expense and add it to transactions table FOOD
   app.post("/api/posts/expense/food", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
@@ -218,14 +219,14 @@ module.exports = function (app) {
       }).then(function (data) {
         res.json(data)
       });
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
   // Create a new expense and add it to transactions table RENT
   app.post("/api/posts/expense/rent", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
@@ -237,14 +238,14 @@ module.exports = function (app) {
       }).then(function (data) {
         res.json(data)
       });
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
   // Create a new expense and add it to transactions table ENTERTAINMENT
   app.post("/api/posts/expense/entertainment", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
@@ -256,14 +257,14 @@ module.exports = function (app) {
       }).then(function (data) {
         res.json(data)
       });
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
   // Create a new expense and add it to transactions table other
   app.post("/api/posts/expense/other", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  // checks to see if valid session
       db.transactions.create({
         userId: req.body.userID,
         // categoryID: req.body.categoryID,
@@ -275,16 +276,16 @@ module.exports = function (app) {
       }).then(function (data) {
         res.json(data)
       });
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
 
   // Delete an expense from expenseData
   // only needs to be passed the unique transactionID of transactions 
   app.delete("/api/delete/:transactionID", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) {  //checks to see if valid session
+    //if (req.session.user && req.cookies.user_sid) {  //checks to see if valid session
 
       db.transaction.destroy({
         where: {
@@ -294,9 +295,9 @@ module.exports = function (app) {
         .then(function (data) {
           res.json(data);
         });
-    } else {
-      res.redirect('/login') //if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') //if not valid redirect to login page
+    // }
   });
 
 
@@ -306,94 +307,93 @@ module.exports = function (app) {
   // use the "/budgets/:userID/" route to retrieve the budget for the specific user then have to find the specific budget value
 
   // update budget depending on new request CLOTHES
-  app.put("/api/update/clothes/:value", function (req, res) {
+   // update budget depending on new request OTHER
+   app.put("/api/update/clothes/:value/:id", function (req, res) {
     var newData = { clothes: req.params.value };
-    if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
+    // if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
       db.budgets.update(newData,
         {
           where:
             {
-              userID: req.cookies.userID
+              userID: req.params.id
             }
-        }).then(function (data) {
-          res.redirect('/budgets/' + req.cookies.userID);
+        }).then(function(data){
+          res.json(data);
         })
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
-  // update budget depending on new request FOOD
-  app.put("/api/update/food/:value", function (req, res) {
-    var newData = { food: req.params.value };
-    if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
-      db.budgets.update(newData,
-        {
-          where:
-            {
-              userID: req.cookies.userID
-            }
-        }).then(function (data) {
-          res.redirect('/budgets/' + req.cookies.userID);
-        })
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
-  });
-
-  // update budget depending on new request RENT
-  app.put("/api/update/rent/:value", function (req, res) {
+  app.put("/api/update/rent/:value/:id", function (req, res) {
     var newData = { rent: req.params.value };
-    if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
+    // if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
       db.budgets.update(newData,
         {
           where:
             {
-              userID: req.cookies.userID
+              userID: req.params.id
             }
-        }).then(function (data) {
-          res.redirect('/budgets/' + req.cookies.userID);
+        }).then(function(data){
+          res.json(data);
         })
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
-  // update budget depending on new request ENTERTAINMENT
-  app.put("/api/update/entertainment/:value", function (req, res) {
+  app.put("/api/update/food/:value/:id", function (req, res) {
+    var newData = { food: req.params.value };
+    // if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
+      db.budgets.update(newData,
+        {
+          where:
+            {
+              userID: req.params.id
+            }
+        }).then(function(data){
+          res.json(data);
+        })
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
+  });
+
+  app.put("/api/update/entertainment/:value/:id", function (req, res) {
     var newData = { entertainment: req.params.value };
-    if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
+    // if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
       db.budgets.update(newData,
         {
           where:
             {
-              userID: req.cookies.userID
+              userID: req.params.id
             }
-        }).then(function (data) {
-          res.redirect('/budgets/' + req.cookies.userID);
+        }).then(function(data){
+          res.json(data);
         })
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
 
-  // update budget depending on new request OTHER
-  app.put("/api/update/other/:value", function (req, res) {
+  app.put("/api/update/other/:value/:id", function (req, res) {
     var newData = { other: req.params.value };
-    if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
+    // if (req.session.user && req.cookies.user_sid) { // checks to see if valid session
       db.budgets.update(newData,
         {
           where:
             {
-              userID: req.cookies.userID
+              userID: req.params.id
             }
-        }).then(function (data) {
-          res.redirect('/budgets/' + req.cookies.userID);
+        }).then(function(data){
+          res.json(data);
         })
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
   });
+
+  
 };
 
 

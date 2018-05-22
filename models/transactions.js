@@ -13,7 +13,7 @@ var transactions = sequelize.define("transactions", {
   },
   category: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       len: [1]
     }
