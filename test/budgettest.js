@@ -10,19 +10,22 @@ var assert = require("chai").assert
 
 describe("budgets", function() {
 
-    it("verify model: clothes", function() {
-        expect(budgets.food)
-            .to.not.be.null
-            .to.equal(30)
-    });
+    it("verify model: budgets", function(done) {
+        
+    })
 
-
+            
 });
+console.log("budget: " + budgets);
+console.log("user: " + user)
+;
 
 describe("users", function() {
-    it("Verify user model", function() {
-        expect(user.name)
-        .to.be.a("string")
+    it("Verify user model", function(done) {
+        expect(user.name, user.email, user.password)
+            .to.be.a("string")
+            .to.not.be.null;
+        done()
         
     })
 })

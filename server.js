@@ -27,4 +27,5 @@ db.sequelize.sync({force: true}).then(() => {
 	})
 });
 
-module.exports = app.listen(PORT)
+server = app.listen(PORT)
+module.exports = server

@@ -77,8 +77,8 @@ module.exports = function (app) {
       // document.cookie = "userID=" + user.ID;
       // req.session.user = user.dataValues;
       // res.redirect('/budgets/' + user.ID);
-      console.log("____USER DATA_____");
-      console.log(user)
+/*       console.log("____USER DATA_____");
+      console.log(user) */
       res.json(user)
       
     })
@@ -102,8 +102,8 @@ module.exports = function (app) {
       entertainment: req.body.entertainment,
       other: req.body.other
     }).then(function (user) {
-      console.log("____BUDGET DATA_____");
-      console.log(user)
+/*       console.log("____BUDGET DATA_____");
+      console.log(user) */
     })
   })
  
