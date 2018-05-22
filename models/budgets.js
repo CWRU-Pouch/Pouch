@@ -27,6 +27,10 @@ var budgets = sequelize.define("budgets", {
     type: Sequelize.INTEGER,
     allowNull: false
   },
+  userId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
 }, {
   timestamps: false
 });

@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": null,
+    "password": "Blckd487",
     "database": "pouch",
     "host": "localhost",
     "dialect": "mysql"

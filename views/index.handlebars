@@ -1,279 +1,594 @@
-<div class="container">
-    <div class="card-panel" id="test">
-        <span class="hello_user">Hello, {{userInfo.userData.name}}</span>
-        <a href="index.html" class="modal-close waves-effect waves-green btn-flat">Logout</a>
-    </div>
-</div>
+<head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
 
-   <div class = "container">       
-      
-      <ul class = "collapsible popout" data-collapsible = "accordion">
-         <li>
-            <div class = "collapsible-header">
-            <span><i class = "material-icons" style="color: #866290;">redeem</i>Clothes</span><span style="margin-left: 700px">Total left: {{userInfo.budgetsData.clothes}} </span>
-                </div> 
-            <div class = "collapsible-body">
-                <table class="table">
+
+
+        var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname;
+        var pathArray = window.location.pathname.split('/');
+        var userID = pathArray[2];
+        //console.log("Hello there")
+        var $main = $("body");
+
+
+
+        $main.on('click', '#other_submit', function () {
+            console.log("This is clicking")
+            var oprice = Number($("#other_price").val().trim());
+            var other_data = {
+                category: "other",
+                notes: $("#other_description").val().trim(),
+                amount: oprice,
+                userID: userID
+            };
+
+
+            $.ajax({
+                type: "GET",
+                url: "/get/budget/" + userID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("BUDGET DATA")
+                console.log(data)
+                var otherBudget = data.other;
+                console.log(otherBudget)
+                otherBudget = otherBudget - oprice;
+                console.log(otherBudget)
+                console.log(userID)
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/update/other/" + otherBudget + "/" + userID
+                }).then(function (data) {
+                    console.log("NEW BALANCE")
+                    console.log(data)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/posts/expense/other",
+                        data: other_data
+                    }).then(function (data) {
+                        console.log('ADDED TRANSACTION')
+                        $.ajax({
+                            type: "GET",
+
+                            url: "/budgets/" + userID
+                        }).then(function (data) {
+                            console.log(data)
+                            location.href = "/budgets/" + userID;
+                        });
+                    });
+
+                });
+
+            });
+            console.log(other_data);
+        });
+
+
+        //_________________
+        $main.on('click', '#entertainment_submit', function () {
+            console.log("This is clicking")
+
+            var eprice = Number($("#entertainment_price").val().trim());
+            var entertainment_data = {
+                category: "Entertainment",
+                notes: $("#entertainment_description").val().trim(),
+                amount: eprice,
+                userID: userID
+            };
+
+
+            $.ajax({
+                type: "GET",
+                url: "/get/budget/" + userID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("BUDGET DATA")
+                console.log(data)
+                var entertainmentBudget = data.entertainment;
+                console.log(entertainmentBudget)
+                entertainmentBudget = entertainmentBudget - eprice;
+                console.log(entertainmentBudget)
+                console.log(userID)
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/update/entertainment/" + entertainmentBudget + "/" + userID
+                }).then(function (data) {
+                    console.log("NEW BALANCE")
+                    console.log(data)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/posts/expense/entertainment",
+                        data: entertainment_data
+                    }).then(function (data) {
+                        console.log('ADDED TRANSACTION')
+                        $.ajax({
+                            type: "GET",
+
+                            url: "/budgets/" + userID
+                        }).then(function (data) {
+                            console.log(data)
+                            location.href = "/budgets/" + userID;
+                        });
+                    });
+
+                });
+
+            });
+
+            console.log(entertainment_data);
+        });
+        //____________________________
+        $main.on('click', '#clothes_submit', function () {
+
+            console.log("This is clicking")
+
+            var cprice = Number($("#clothes_price").val().trim());
+            var clothes_data = {
+                category: "Clothes",
+                notes: $("#clothes_description").val().trim(),
+                amount: cprice,
+                userID: userID
+            };
+
+            $.ajax({
+                type: "GET",
+                url: "/get/budget/" + userID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("BUDGET DATA")
+                console.log(data)
+                var clothesBudget = data.clothes;
+                console.log(clothesBudget)
+                clothesBudget = clothesBudget - cprice;
+                console.log(clothesBudget)
+                console.log(userID)
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/update/clothes/" + clothesBudget + "/" + userID
+                }).then(function (data) {
+                    console.log("NEW BALANCE")
+                    console.log(data)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/posts/expense/clothes",
+                        data: clothes_data
+                    }).then(function (data) {
+                        console.log('ADDED TRANSACTION')
+                        $.ajax({
+                            type: "GET",
+
+                            url: "/budgets/" + userID
+                        }).then(function (data) {
+                            console.log(data)
+                            console.log(userID)
+                            location.href = "/budgets/" + userID;
+                        });
+                    });
+
+                });
+
+            });
+
+
+            console.log(clothes_data)
+        });
+
+        //_______________________
+        $main.on('click', '#food_submit', function () {
+            console.log("This is clicking")
+
+            var fprice = Number($("#food_price").val().trim());
+            var food_data = {
+                category: "Food",
+                notes: $("#food_description").val().trim(),
+                amount: fprice,
+                userID: userID
+            };
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/get/budget/" + userID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("BUDGET DATA")
+                console.log(data)
+                var foodBudget = data.food;
+                console.log(foodBudget)
+                foodBudget = foodBudget - fprice;
+                console.log(foodBudget)
+                console.log(userID)
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/update/food/" + foodBudget + "/" + userID
+                }).then(function (data) {
+                    console.log("NEW BALANCE")
+                    console.log(data)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/posts/expense/food",
+                        data: food_data
+                    }).then(function (data) {
+                        console.log('ADDED TRANSACTION')
+                        $.ajax({
+                            type: "GET",
+
+                            url: "/budgets/" + userID
+                        }).then(function (data) {
+                            console.log(data)
+                            location.href = "/budgets/" + userID;
+                        });
+                    });
+
+                });
+
+            });
+
+
+
+            console.log(food_data)
+        });
+        $main.on('click', '#rent_submit', function () {
+            console.log("This is clicking")
+
+            var rprice = Number($("#rent_price").val().trim());
+            var rent_data = {
+                category: "Rent",
+                notes: $("#rent_description").val().trim(),
+                amount: rprice,
+                userID: userID
+            };
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/get/budget/" + userID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("BUDGET DATA")
+                console.log(data)
+                var rentBudget = data.rent;
+                console.log(rentBudget)
+                rentBudget = rentBudget - rprice;
+                console.log(rentBudget)
+                console.log(userID)
+                $.ajax({
+                    type: "PUT",
+                    url: "/api/update/rent/" + rentBudget + "/" + userID
+                }).then(function (data) {
+                    console.log("NEW BALANCE")
+                    console.log(data)
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/posts/expense/rent",
+                        data: rent_data
+                    }).then(function (data) {
+                        console.log('ADDED TRANSACTION')
+                        $.ajax({
+                            type: "GET",
+
+                            url: "/budgets/" + userID
+                        }).then(function (data) {
+                            console.log(data)
+                            location.href = "/budgets/" + userID;
+                        });
+                    });
+
+                });
+
+                console.log(rent_data)
+            });
+
+
+        });
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card-panel" id="test">
+            <span class="hello_user">Hello, {{userInfo.userData.name}}</span>
+            <a href="../login.html" class="modal-close waves-effect waves-green btn-flat">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <ul class="collapsible popout" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header">
+                    <span>
+                        <i class="material-icons" style="color: #866290;">redeem</i>Clothes</span>
+                    <span style="margin-left: 700px">Total left: {{userInfo.budgetsData.clothes}} </span>
+                </div>
+                <div class="collapsible-body">
+                    <table class="table">
                         <thead>
-                          <tr>
-                            <th id="table_center">Amounts</th>
-                            <th id="table_center">Descriptions</th>
-                            <th id="table_center">Action</th>
-                          </tr>
+                            <tr>
+                                <th id="table_center">Amounts</th>
+                                <th id="table_center">Descriptions</th>
+                                <th id="table_center">Action</th>
+                            </tr>
                         </thead>
                         <tbody>
 
-                        	{{#each userInfo.transactionData}}
-                   				{{#if clothes}}
-                   					<tr>
-										<td id="table_center">{{amount}}</td>
-										<td id="table_center"> {{notes}} </td>
-										<td id="table_center"><a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-										</td>
-									</tr>
-								{{/if}}
-							{{/each}} 
-                        
+                            {{#each userInfo.transactionData}} {{#if clothes}}
+                            <tr>
+                                <td id="table_center">{{amount}}</td>
+                                <td id="table_center"> {{notes}} </td>
+                                <td id="table_center">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                </td>
+                            </tr>
+                            {{/if}} {{/each}}
+
                         </tbody>
-                      </table>
-                      <div class="container">
-                            <div class="row">
-                                 <div class="col s12">
-                                         <div class="card-panel">
-                                                 <center><H5 class="medium_light">ADD TRANSACTION</H5></center>
-                                                 <div class="row">
-                                                        <div class="input-field col s4">
-                                                            <input id="clothes_price" type="text" class="validate">
-                                                            <label for="clothes_price">Price</label>
-                                                        </div>
-                                                        <div class="input-field col s4">
-                                                            <input id="clothes_description" type="text" class="validate">
-                                                            <label for="clothes_description">Description</label>
-                                                        </div>
-                                                        <div class="input-field col s4">
-                                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="clothes_submit">submit</button>
-                    
-                                                        </div>
-                                                </div>
-                                         </div>
-                                 </div>       
-                            </div>
-                        </div>
-                <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
-            </div>
-         </li>
-         <li>
-            <div class = "collapsible-header">
-                <span><i class = "material-icons" style="color: #40a492;">restaurant</i>Food</span><span style="margin-left: 717px">Total left: {{userInfo.budgetsData.food}}</span>
-                 </div>
-                <div class = "collapsible-body">
-                        <table class="table">
-                                <thead>
-                                  <tr>
-                                    <th id="table_center">Amounts</th>
-                                    <th id="table_center">Descriptions</th>
-                                    <th id="table_center">Action</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                	{{#each userInfo.transactionData}}
-		                   				{{#if food}}
-		                   					<tr>
-												<td id="table_center">{{amount}}</td>
-												<td id="table_center"> {{notes}} </td>
-												<td id="table_center"><a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-												</td>
-											</tr>
-										{{/if}}
-									{{/each}}
-                                
-                                </tbody>
-                              </table>
-                              <div class="container">
+                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel">
+                                    <center>
+                                        <H5 class="medium_light">ADD TRANSACTION</H5>
+                                    </center>
                                     <div class="row">
-                                         <div class="col s12">
-                                                 <div class="card-panel">
-                                                         <center><H5 class="medium_light">ADD TRANSACTION</H5></center>
-                                                         <div class="row">
-                                                                <div class="input-field col s4">
-                                                                    <input id="food_price" type="text" class="validate">
-                                                                    <label for="food_price">Price</label>
-                                                                </div>
-                                                                <div class="input-field col s4">
-                                                                    <input id="food_description" type="text" class="validate">
-                                                                    <label for="food_description">Description</label>
-                                                                </div>
-                                                                <div class="input-field col s4">
-                                                                    <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="food_submit">submit</button>
-                            
-                                                                </div>
-                                                        </div>
-                                                 </div>
-                                         </div>       
+                                        <div class="input-field col s4">
+                                            <input id="clothes_price" type="text" class="validate">
+                                            <label for="clothes_price">Price</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="clothes_description" type="text" class="validate">
+                                            <label for="clothes_description">Description</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="clothes_submit">submit</button>
+
+                                        </div>
                                     </div>
                                 </div>
-                        <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
-                    </div>
-            
-        </li>
-         
-         <li>
-            <div class = "collapsible-header">
-                <span><i class = "material-icons" style="color: #785682;">account_balance</i>Rent</span><span style="margin-left: 719px">Total left: {{userInfo.budgetsData.rent}}</span>
-               </div>
-               <div class = "collapsible-body">
-                    <table class="table">
-                            <thead>
-                              <tr>
-                                <th id="table_center">Amounts</th>
-                                <th id="table_center">Descriptions</th>
-                                <th id="table_center">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-
-                            	{{#each userInfo.transactionData}}
-	                   				{{#if rent}}
-	                   					<tr>
-											<td id="table_center">{{amount}}</td>
-											<td id="table_center"> {{notes}} </td>
-											<td id="table_center"><a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-											</td>
-										</tr>
-									{{/if}}
-								{{/each}} 
-
-                            </tbody>
-                          </table>
-                          <div class="container">
-                                <div class="row">
-                                     <div class="col s12">
-                                             <div class="card-panel">
-                                                     <center><H5 class="medium_light">ADD TRANSACTION</H5></center>
-                                                     <div class="row">
-                                                            <div class="input-field col s4">
-                                                                <input id="rent_price" type="text" class="validate">
-                                                                <label for="rent_price">Price</label>
-                                                            </div>
-                                                            <div class="input-field col s4">
-                                                                <input id="rent_description" type="text" class="validate">
-                                                                <label for="rent_description">Description</label>
-                                                            </div>
-                                                            <div class="input-field col s4">
-                                                                <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="rent_submit">submit</button>
-                        
-                                                            </div>
-                                                    </div>
-                                             </div>
-                                     </div>       
-                                </div>
                             </div>
+                        </div>
+                    </div>
                     <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
                 </div>
-         </li>
-         <li>
-                <div class = "collapsible-header">
-                    <span><i class = "material-icons" style="color: #54757d">movie</i>Entertainment</span><span style="margin-left: 655px">Total left: {{userInfo.budgetsData.entertainment}}</span>
-                        </div>
-                   <div class = "collapsible-body">
-                        <table class="table">
-                                <thead>
-                                  <tr>
-                                    <th id="table_center">Amounts</th>
-                                    <th id="table_center">Descriptions</th>
-                                    <th id="table_center">Action</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                	{{#each userInfo.transactionData}}
-		                   				{{#if entertainment}}
-		                   					<tr>
-												<td id="table_center">{{amount}}</td>
-												<td id="table_center"> {{notes}} </td>
-												<td id="table_center"><a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-												</td>
-											</tr>
-										{{/if}}
-									{{/each}} 
-                                
-                                </tbody>
-                              </table>
-                              <div class="container">
-                                    <div class="row">
-                                         <div class="col s12">
-                                                 <div class="card-panel">
-                                                         <center><H5 class="medium_light">ADD TRANSACTION</H5></center>
-                                                         <div class="row">
-                                                                <div class="input-field col s4">
-                                                                    <input id="entertainment_price" type="text" class="validate">
-                                                                    <label for="entertainment_price">Price</label>
-                                                                </div>
-                                                                <div class="input-field col s4">
-                                                                    <input id="entertainment_description" type="text" class="validate">
-                                                                    <label for="entertainment_description">Description</label>
-                                                                </div>
-                                                                <div class="input-field col s4">
-                                                                    <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="entertainment_submit">submit</button>
-                            
-                                                                </div>
-                                                        </div>
-                                                 </div>
-                                         </div>       
-                                    </div>
-                                </div>
-                        <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
-                    </div>
-        </li>
-         
-         <li>
-            <div class = "collapsible-header">
-               <span><i class = "material-icons" style="color: #40ac90;">whatshot</i>Other</span><span style="margin-left: 713px">Total left: {{userInfo.budgetsData.other}}</span></div>
-               <div class = "collapsible-body">
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <span>
+                        <i class="material-icons" style="color: #40a492;">restaurant</i>Food</span>
+                    <span style="margin-left: 717px">Total left: {{userInfo.budgetsData.food}}</span>
+                </div>
+                <div class="collapsible-body">
                     <table class="table">
-                            <thead>
-                              <tr>
+                        <thead>
+                            <tr>
                                 <th id="table_center">Amounts</th>
                                 <th id="table_center">Descriptions</th>
                                 <th id="table_center">Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-	                              {{#each userInfo.transactionData}}
-	                   				{{#if other}}
-	                   					<tr>
-											<td id="table_center">{{amount}}</td>
-											<td id="table_center"> {{notes}} </td>
-											<td id="table_center"><a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
-											</td>
-										</tr>
-									{{/if}}
-								{{/each}} 
-                            
-                            </tbody>
-                          </table>
-                          <div class="container">
-                                <div class="row">
-                                     <div class="col s12">
-                                             <div class="card-panel">
-                                                     <center><H5 class="medium_light">ADD TRANSACTION</H5></center>
-                                                     <div class="row">
-                                                            <div class="input-field col s4">
-                                                                <input id="other_price" type="text" class="validate">
-                                                                <label for="other_price">Price</label>
-                                                            </div>
-                                                            <div class="input-field col s4">
-                                                                <input id="other_description" type="text" class="validate">
-                                                                <label for="other_description">Description</label>
-                                                            </div>
-                                                            <div class="input-field col s4">
-                                                                <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="other_submit">submit</button>
-                        
-                                                            </div>
-                                                    </div>
-                                             </div>
-                                     </div>       
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each userInfo.transactionData}} {{#if food}}
+                            <tr>
+                                <td id="table_center">{{amount}}</td>
+                                <td id="table_center"> {{notes}} </td>
+                                <td id="table_center">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                </td>
+                            </tr>
+                            {{/if}} {{/each}}
+
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel">
+                                    <center>
+                                        <H5 class="medium_light">ADD TRANSACTION</H5>
+                                    </center>
+                                    <div class="row">
+                                        <div class="input-field col s4">
+                                            <input id="food_price" type="text" class="validate">
+                                            <label for="food_price">Price</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="food_description" type="text" class="validate">
+                                            <label for="food_description">Description</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="food_submit">submit</button>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
                 </div>
-         </li>
-      </ul>
+
+            </li>
+
+            <li>
+                <div class="collapsible-header">
+                    <span>
+                        <i class="material-icons" style="color: #785682;">account_balance</i>Rent</span>
+                    <span style="margin-left: 719px">Total left: {{userInfo.budgetsData.rent}}</span>
+                </div>
+                <div class="collapsible-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th id="table_center">Amounts</th>
+                                <th id="table_center">Descriptions</th>
+                                <th id="table_center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {{#each userInfo.transactionData}} {{#if rent}}
+                            <tr>
+                                <td id="table_center">{{amount}}</td>
+                                <td id="table_center"> {{notes}} </td>
+                                <td id="table_center">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                </td>
+                            </tr>
+                            {{/if}} {{/each}}
+
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel">
+                                    <center>
+                                        <H5 class="medium_light">ADD TRANSACTION</H5>
+                                    </center>
+                                    <div class="row">
+                                        <div class="input-field col s4">
+                                            <input id="rent_price" type="text" class="validate">
+                                            <label for="rent_price">Price</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="rent_description" type="text" class="validate">
+                                            <label for="rent_description">Description</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="rent_submit">submit</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header">
+                    <span>
+                        <i class="material-icons" style="color: #54757d">movie</i>Entertainment</span>
+                    <span style="margin-left: 655px">Total left: {{userInfo.budgetsData.entertainment}}</span>
+                </div>
+                <div class="collapsible-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th id="table_center">Amounts</th>
+                                <th id="table_center">Descriptions</th>
+                                <th id="table_center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each userInfo.transactionData}} {{#if entertainment}}
+                            <tr>
+                                <td id="table_center">{{amount}}</td>
+                                <td id="table_center"> {{notes}} </td>
+                                <td id="table_center">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                </td>
+                            </tr>
+                            {{/if}} {{/each}}
+
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel">
+                                    <center>
+                                        <H5 class="medium_light">ADD TRANSACTION</H5>
+                                    </center>
+                                    <div class="row">
+                                        <div class="input-field col s4">
+                                            <input id="entertainment_price" type="text" class="validate">
+                                            <label for="entertainment_price">Price</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="entertainment_description" type="text" class="validate">
+                                            <label for="entertainment_description">Description</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="entertainment_submit">submit</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <a class="waves-effect waves-light btn modal-trigger" href="#modal1" id="modal-trigger">Modal</a> -->
+                </div>
+            </li>
+
+            <li>
+                <div class="collapsible-header">
+                    <span>
+                        <i class="material-icons" style="color: #40ac90;">whatshot</i>Other</span>
+                    <span style="margin-left: 713px">Total left: {{userInfo.budgetsData.other}}</span>
+                </div>
+                <div class="collapsible-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th id="table_center">Amounts</th>
+                                <th id="table_center">Descriptions</th>
+                                <th id="table_center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each userInfo.transactionData}} {{#if other}}
+                            <tr>
+                                <td id="table_center">{{amount}}</td>
+                                <td id="table_center"> {{notes}} </td>
+                                <td id="table_center">
+                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                </td>
+                            </tr>
+                            {{/if}} {{/each}}
+
+                        </tbody>
+                    </table>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="card-panel">
+                                    <center>
+                                        <H5 class="medium_light">ADD TRANSACTION</H5>
+                                    </center>
+                                    <div class="row">
+                                        <div class="input-field col s4">
+                                            <input id="other_price" type="text" class="validate">
+                                            <label for="other_price">Price</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input id="other_description" type="text" class="validate">
+                                            <label for="other_description">Description</label>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <button class="modal-close waves-effect waves-green btn-flat" type="submit" id="other_submit">submit</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+</body>
