@@ -91,16 +91,16 @@
 
 
     <script>
-
         $("#submit_button").click(function () {
-
-            var budget = JSON.stringify({
-                clothes: Number($("#clothes_budget").val().trim()),
-                food: Number($("#food_budget").val().trim()),
-                rent: Number($("#rent_budget").val().trim()),
-                entertainment: Number($("#entertainment_budget").val().trim()),
-                other: Number($("#other_budget").val().trim())
-            });
+            // var budget = JSON.stringify({
+            //     clothes: Number($("#clothes_budget").val().trim()),
+            //     food: Number($("#food_budget").val().trim()),
+            //     rent: Number($("#rent_budget").val().trim()),
+            //     entertainment: Number($("#entertainment_budget").val().trim()),
+            //     other: Number($("#other_budget").val().trim())
+            // });
+            var userID;
+            console.log("FIRST" + userID)
             var user = JSON.stringify({
                 name: $("#first_name").val().trim(),
                 email: $("#email_address").val().trim(),
@@ -109,57 +109,52 @@
             var email = JSON.stringify({
                 email: $("#email_address").val().trim()
             });
-
-
-            console.log(budget);
+            //console.log(budget);
             console.log(user);
-
-
-
             $.ajax({
                 type: "POST",
                 url: "/signup/submit",
                 data: user,
                 contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data)
+                dataType: "json"
+            }).then(function (data) {
+                userID = data.id;
+                console.log("SECOND" + userID)
+                var budget = JSON.stringify({
+                    clothes: Number($("#clothes_budget").val().trim()),
+                    food: Number($("#food_budget").val().trim()),
+                    rent: Number($("#rent_budget").val().trim()),
+                    entertainment: Number($("#entertainment_budget").val().trim()),
+                    other: Number($("#other_budget").val().trim()),
+                    userId: userID // ****************for some reason adding this makes data not go into budgets table
+                });
+                console.log(budget);
+                $.ajax({
+                    type: "POST",
+                    url: "/signup/submit/budgets",
+                    data: budget,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                }).then(function (data) {
+
                     var userID = data.id;
+                    console.log("LAST USER ID" + userID)
                     $.ajax({
                         type: "GET",
-                        url:"/budgets/"+userID 
-                    })
 
-                }
-            })
-            $.ajax({
-                type: "POST",
-                url: "/signup/submit/budgets",
-                data: budget,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    console.log("Budget added")
-                   
-                }
+                        url: "/budgets/" + userID
+                    }).then(function (data) {
+                        console.log(data)
+                        location.href = "/budgets/" + userID;
+                    });
+
+
+                });
             });
+          
+        });
 
-            // $.ajax({
-            //     type: "GET",
-            //     url: "get/id",
-            //     data: email,
-            //     contentType: "application/json; charset=utf-8",
-            //     dataType: "json"
-            // }).then(function (data) {
-            //     console.log("NEW DATA______");
-            //     console.log(data);
-            // })
-        })
-
-
-
-
-
+         
 
     </script>
 </body>

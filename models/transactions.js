@@ -56,15 +56,15 @@ var transactions = sequelize.define("transactions", {
 });
 
 
-transactions.associate = function(models) {
+// transactions.associate = function(models) {
 
-transactions.belongsTo(models.users, {
-       foreignKey: {
-         allowNull: false
-      },
-      constraints: false
-    });
-};
+// transactions.belongsTo(models.users, {
+//        foreignKey: {
+//          allowNull: false
+//       },
+//       constraints: false
+//     });
+// };
 
 
 return transactions;

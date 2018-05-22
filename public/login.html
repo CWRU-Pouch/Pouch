@@ -109,7 +109,11 @@
                     console.log(userID)
                     $.ajax({
                         type: "GET",
-                        url: "/budgets/"+userID
+                        
+                        url:"/budgets/"+ userID
+                    }).then(function(data){
+                        console.log(data)
+                        location.href = "/budgets/"+userID;
                     })
                 }
             })
