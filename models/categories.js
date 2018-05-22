@@ -1,11 +1,8 @@
-//var Sequelize = require("sequelize");
-// sequelize (lowercase) references my connection to the DB.
-//var sequelize = require("../config/config.json");
 
-// Creates a expense model that matches up with DB
 
 module.exports = function(sequelize, Sequelize) {
 var categories = sequelize.define("categories", {
+<<<<<<< HEAD
   categoryID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -13,6 +10,8 @@ var categories = sequelize.define("categories", {
     primaryKey: true
    // autoIncrement: true,
   },
+=======
+>>>>>>> 94b69f5cd0b09d54a0d3b2824672d35841b6f7bf
   category: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -31,9 +30,3 @@ return categories;
 
 }
 
-
-// Syncs with DB
-//categories.sync();
-
-// Makes the expenseData Model available for other files (will also create a table)
-//module.exports = categories;

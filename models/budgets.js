@@ -1,11 +1,7 @@
-var Sequelize = require("sequelize");
-// sequelize (lowercase) references my connection to the DB.
-//var sequelize = require("../config/config.json");
-
-// Creating userData model to match with userData table from DB
 
 module.exports = function(sequelize, Sequelize) {
 var budgets = sequelize.define("budgets", {
+<<<<<<< HEAD
   userID: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -36,6 +32,20 @@ var budgets = sequelize.define("budgets", {
         args: .01,
         msg: "Please choose a value greater than zero"}
     }
+=======
+
+  clothes: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  food: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  rent: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+>>>>>>> 94b69f5cd0b09d54a0d3b2824672d35841b6f7bf
   },
   entertainment: {
     type: Sequelize.DECIMAL(10,2),
@@ -47,6 +57,7 @@ var budgets = sequelize.define("budgets", {
     }
   },
   other: {
+<<<<<<< HEAD
     type: Sequelize.DECIMAL(10,2),
     allowNull: false,
     validate: {
@@ -54,24 +65,26 @@ var budgets = sequelize.define("budgets", {
         args: .01,
         msg: "Please choose a value greater than zero"}
     }
+=======
+    type: Sequelize.INTEGER,
+    allowNull: false
+>>>>>>> 94b69f5cd0b09d54a0d3b2824672d35841b6f7bf
   },
 }, {
   timestamps: false
 });
 
-/*function()queryInterface.bulkInsert('budgets',([
+// budgets.associate = function(models) {
 
-      {userID: 1, clothes: 50, food: 100, rent: 250, entertainment: 75, other: 5}
+// budgets.belongsTo(models.users, {
+//        foreignKey: {
+//          allowNull: false
+//        },
+//       constraints: false
+//     });
+// };
 
-
-  ]));*/
 
 return budgets;
 
-}
-
-// Syncs with DB
-//budget.sync();
-
-// Makes the Book Model available for other files (will also create a table)
-//module.exports = budget;
+};
