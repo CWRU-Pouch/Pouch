@@ -100,10 +100,12 @@ module.exports = function (app) {
       food: req.body.food,
       rent: req.body.rent,
       entertainment: req.body.entertainment,
-      other: req.body.other
+      other: req.body.other,
+      userId: req.body.userId
     }).then(function (user) {
       console.log("____BUDGET DATA_____");
       console.log(user)
+      res.json(user)
     })
   })
 

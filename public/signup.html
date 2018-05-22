@@ -126,7 +126,7 @@
                     rent: Number($("#rent_budget").val().trim()),
                     entertainment: Number($("#entertainment_budget").val().trim()),
                     other: Number($("#other_budget").val().trim()),
-                    userId: userID // ****************for some reason adding this makes data not go into budgets table
+                    userId: Number(userID) // ****************for some reason adding this makes data not go into budgets table
                 });
                 console.log(budget);
                 $.ajax({
