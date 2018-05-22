@@ -12,6 +12,7 @@ var users = sequelize.define("users", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
+      unique: true,
       isEmail: true,
       len: [1]
     }
