@@ -12,6 +12,62 @@
 
 
 
+        //delete button
+        $main.on('click', '.delete', function () {
+            console.log("CLICKING")
+            var deleteID = $(this).attr("data-id");
+            var category = $(this).attr("category");
+            console.log("DELETE ID IS: " + deleteID)
+            $.ajax({
+                type: "GET",
+                url: "/api/get/" + deleteID,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).then(function (data) {
+                console.log("Transaction to DELETE")
+                console.log(data)
+                var price = Number(data.amount) || 0;
+                $.ajax({
+                    type: "GET",
+                    url: "/get/budget/" + userID,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json"
+                }).then(function (data) {
+                    console.log("BUDGET DATA")
+                    console.log(data)
+                    var otherBudget = data[category];
+                    console.log("THIS IS BUDGET " + otherBudget)
+                    console.log("THIS IS PRICE TO BE ADDED" + price)
+                    otherBudget = otherBudget + price;
+                    console.log("THIS SHOULD BE NEW BUDGET: " + otherBudget)
+                    console.log(otherBudget)
+                    console.log(userID)
+                    $.ajax({
+                        type: "PUT",
+                        url: "/api/update/"+category+"/" + otherBudget + "/" + userID
+                    }).then(function (data) {
+                        console.log("NEW BALANCE")
+                        console.log(data)
+                        $.ajax({
+                            type: "DELETE",
+                            url: "/api/delete/" + deleteID
+                        }).then(function (data) {
+                            console.log('Transaction Deleted')
+                            $.ajax({
+                                type: "GET",
+                                url: "/budgets/" + userID
+                           }).then(function (data) {
+                                console.log(data)
+                                location.href = "/budgets/" + userID;
+                           });
+                        });
+                    });
+                });
+            });
+        });
+
+
+
         $main.on('click', '#other_submit', function () {
             console.log("This is clicking")
             var oprice = Number($("#other_price").val().trim());
@@ -328,7 +384,7 @@
                                 <td id="table_center">{{amount}}</td>
                                 <td id="table_center"> {{notes}} </td>
                                 <td id="table_center">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                    <button href="#!" class="delete modal-close waves-effect waves-green btn-flat" category="clothes" data-id="{{id}}">Delete</button>
                                 </td>
                             </tr>
                             {{/if}} {{/each}}
@@ -384,7 +440,7 @@
                                 <td id="table_center">{{amount}}</td>
                                 <td id="table_center"> {{notes}} </td>
                                 <td id="table_center">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                    <button href="#!" category="food" class="delete modal-close waves-effect waves-green btn-flat" data-id="{{id}}">Delete</button>
                                 </td>
                             </tr>
                             {{/if}} {{/each}}
@@ -443,7 +499,7 @@
                                 <td id="table_center">{{amount}}</td>
                                 <td id="table_center"> {{notes}} </td>
                                 <td id="table_center">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                    <delete href="#!" category="rent" class=" delete modal-close waves-effect waves-green btn-flat" data-id="{{id}}">Delete</delete>
                                 </td>
                             </tr>
                             {{/if}} {{/each}}
@@ -499,7 +555,7 @@
                                 <td id="table_center">{{amount}}</td>
                                 <td id="table_center"> {{notes}} </td>
                                 <td id="table_center">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                    <button href="#!" category="entertainment" class=" delete modal-close waves-effect waves-green btn-flat" data-id="{{id}}">Delete</delete>
                                 </td>
                             </tr>
                             {{/if}} {{/each}}
@@ -556,7 +612,7 @@
                                 <td id="table_center">{{amount}}</td>
                                 <td id="table_center"> {{notes}} </td>
                                 <td id="table_center">
-                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+                                    <button category="other" href="#!" class="delete modal-close waves-effect waves-green btn-flat" data-id="{{id}}">Delete</button>
                                 </td>
                             </tr>
                             {{/if}} {{/each}}

@@ -2,34 +2,14 @@
 module.exports = function(sequelize, Sequelize) {
 var transactions = sequelize.define("transactions", {
   amount: {
-    type: Sequelize.DECIMAL(10,2),
+    type: Sequelize.INTEGER,
     allowNull: false,
-    validate: {
-      min: {
-        args: .01,
-        msg: "Please choose a value greater than zero"
-      }
-    }
   },
   location: {
     type: Sequelize.STRING,
-    allowNull: true,
-    validate: {
-      len: {
-        args: [3],
-        msg: "If you're including a location, it must be greater than three characters"
-      }
-    }
   },
   notes: {
-    type: Sequelize.TEXT,
-    allowNull: true,
-    validate: {
-      len: {
-        args: [3],
-        msg: "If you're including notes, they must be greater than three characters"
-      }
-    }
+    type: Sequelize.STRING,
   },
   category: {
     type: Sequelize.STRING,

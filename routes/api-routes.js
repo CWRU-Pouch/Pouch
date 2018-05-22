@@ -77,8 +77,8 @@ module.exports = function (app) {
       // document.cookie = "userID=" + user.ID;
       // req.session.user = user.dataValues;
       // res.redirect('/budgets/' + user.ID);
-/*       console.log("____USER DATA_____");
-      console.log(user) */
+      console.log("____USER DATA_____");
+      console.log(user)
       res.json(user)
       
     })
@@ -283,15 +283,23 @@ module.exports = function (app) {
     // }
   });
 
-
+  app.get("/api/get/:transactionID", function(req,res){
+    db.transactions.findOne({
+      where: {
+        id: req.params.transactionID
+      }
+    }).then(function(user) {
+      res.json(user);
+    });
+  })
   // Delete an expense from expenseData
   // only needs to be passed the unique transactionID of transactions 
   app.delete("/api/delete/:transactionID", function (req, res) {
     //if (req.session.user && req.cookies.user_sid) {  //checks to see if valid session
 
-      db.transaction.destroy({
+      db.transactions.destroy({
         where: {
-          transactionID: req.params.transactionID
+          id: req.params.transactionID
         }
       })
         .then(function (data) {
@@ -343,6 +351,9 @@ module.exports = function (app) {
     //   res.redirect('/login') // if not valid redirect to login page
     // }
   });
+
+
+
 
   app.put("/api/update/food/:value/:id", function (req, res) {
     var newData = { food: req.params.value };
