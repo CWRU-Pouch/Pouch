@@ -3,28 +3,49 @@ module.exports = function(sequelize, Sequelize) {
 var budgets = sequelize.define("budgets", {
 
   clothes: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.DECIMAL(10,2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   food: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.DECIMAL(10,2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   rent: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.DECIMAL(10,2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   entertainment: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10,2),
     allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   other: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.DECIMAL(10,2),
+    allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
 }, {
   timestamps: false
