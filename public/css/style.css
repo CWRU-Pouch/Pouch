@@ -1,0 +1,29 @@
+#table_center {
+    text-align: center;
+}
+
+body {
+    background: url('../images/pouch_background.png') no-repeat center center fixed;
+}
+.collapsible-body {
+    background-color: white;
+}
+
+.hello_user {
+    font-size: 55px;
+    margin-right: 400px
+}
+
+#login_container {
+    margin-top: 105px;
+}
+
+#login_button {
+    background-color: #2D3142;
+    margin-left: 100px; 
+    margin-right: 100px
+}
+
+#signup_span {
+    margin-left: 310px;
+}
