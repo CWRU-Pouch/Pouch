@@ -51,12 +51,29 @@
            
          <script>
             
-                $("#submit_button").click(function(){
-                    console.log("this is working")
-                    var user_email = $("#email_address").val().trim();
-                    var user_password = $("#password").val().trim();
-                    console.log(user_email, user_password);
+           
+            
+            $("#submit_button").click(function(){
+                console.log("this is working")
+                var user = JSON.stringify({
+                    email: $("#email_address").val().trim(),
+                    password: $("#password").val().trim()
                 });
+
+                console.log(user);
+    
+                $.ajax({
+                    type: "POST",
+                    url: "/login/validate",
+                    data: user,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(msg) {
+                        console.log("Logged in")
+                    }
+                });
+            });
+    
           
 
          </script>

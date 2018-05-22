@@ -86,35 +86,47 @@
            
          <script>
             
-                $("#submit_button").click(function(){
-                    console.log("this is working")
-                    var newuser = {
-                        first_name: $("#first_name").val().trim(),
-                        email: $("#email_address").val().trim(),
-                        password: $("#password").val().trim(),
-                        clothes: Number($("#clothes_budget").val().trim()),
-                        food: Number($("#food_budget").val().trim()),
-                        rent: Number($("#rent_budget").val().trim()),
-                        entertainment: Number($("#entertainment_budget").val().trim()),
-                        other: Number($("#other_budget").val().trim())
-                    }
-            
-                    console.log(newuser)
-                
-                });
-          
+            $("#submit_button").click(function(){
+                   
+                   var budget = JSON.stringify({
+                       clothes: Number($("#clothes_budget").val().trim()),
+                       food: Number($("#food_budget").val().trim()),
+                       rent: Number($("#rent_budget").val().trim()),
+                       entertainment: Number($("#entertainment_budget").val().trim()),
+                       other: Number($("#other_budget").val().trim())
+                   });
+                   var user = JSON.stringify({
+                       name: $("#first_name").val().trim(),
+                       email: $("#email_address").val().trim(),
+                       password: $("#password").val().trim()
+                   });
+                   
+                   console.log(budget);
+                   console.log(user);
+                   
+                   $.ajax({
+                       type: "POST",
+                       url: "/signup/submit/budgets",
+                       data: budget,
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       success: function(msg) {
+                           console.log("Budget added")
+                       }
+                   });
 
-            function login(a, b) {
-                $.ajax({
-                    method: "GET",
-                    url: "/api/username=" + a
-                }).then(function(response) {
-                    if (username.password = b) {
-                        return response
-                    }
-                    alert("There is an error with your username and password. Please try again.")
-                })
-            };
+                   $.ajax({
+                       type: "POST",
+                       url: "/signup/submit",
+                       data: user,
+                       contentType: "application/json; charset=utf-8",
+                       dataType: "json",
+                       success: function(msg) {
+                           console.log("User added")
+                       }
+                   });
+               
+               });
 
          </script>
       </body>
