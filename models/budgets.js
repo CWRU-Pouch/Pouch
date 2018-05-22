@@ -26,15 +26,15 @@ var budgets = sequelize.define("budgets", {
   timestamps: false
 });
 
-budgets.associate = function(models) {
+// budgets.associate = function(models) {
 
-budgets.belongsTo(models.users, {
-       foreignKey: {
-         allowNull: false
-       },
-      constraints: false
-    });
-};
+// budgets.belongsTo(models.users, {
+//        foreignKey: {
+//          allowNull: false
+//        },
+//       constraints: false
+//     });
+// };
 
 
 return budgets;

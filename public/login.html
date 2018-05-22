@@ -1,82 +1,124 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-        <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700i" rel="stylesheet">
-        <!--Import materialize.css as a catch all-->
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-         <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-        <!-- Compiled and minified JavaScript -->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-        <!--Let browser know website is optimized for mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!-- import JQuery -->
-        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-        <!-- internal css -->
-        <link rel = "stylesheet" href = "/css/style.css">
-      </head>
-      </head>
-      <body>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700i" rel="stylesheet">
+    <!--Import materialize.css as a catch all-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- import JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!-- internal css -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</head>
+
+<body>
 
 
-         <div class="container" id="login_container">
-                <div class="card-panel">
-                        <img class="responsive-img" src = "/images/pouch_logo_name.png">
-                    <center><span>New around here?<a href="signup.html"> Click here</a> to Sign-Up.</span></center>
-                       <div class="card-panel">
-                            <center><h2>Login Information</h2></center>
-                            <form class="col s4">
-                                    <div class="row">
-                                        <div class="input-field col s8" style="margin-left: 200px">
-                                            <input id="email_address" type="text" class="validate">
-                                            <label for="email_address">Email Address</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s8" style="margin-left: 200px">
-                                            <input id="password" type="text" class="validate">
-                                            <label for="password">Password</label>
-                                        </div>
-                                    </div>
-                                </form>
-                       </div>
-                       <center><a id="submit_button" class="waves-effect waves-light btn">submit</a></center>
+    <div class="container" id="login_container">
+        <div class="card-panel">
+            <img class="responsive-img" src="/images/pouch_logo_name.png">
+            <center>
+                <span>New around here?
+                    <a href="signup.html"> Click here</a> to Sign-Up.</span>
+            </center>
+            <div class="card-panel">
+                <center>
+                    <h2>Login Information</h2>
+                </center>
+                <form class="col s4">
+                    <div class="row">
+                        <div class="input-field col s8" style="margin-left: 200px">
+                            <input id="email_address" type="text" class="validate">
+                            <label for="email_address">Email Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s8" style="margin-left: 200px">
+                            <input id="password" type="text" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <center>
+                <a id="submit_button" class="waves-effect waves-light btn">submit</a>
+            </center>
 
-                        
-                </div>
-         </div>
-                
-           
-         <script>
-            
-           
-            
-            $("#submit_button").click(function(){
-                console.log("this is working")
-                var user = JSON.stringify({
-                    email: $("#email_address").val().trim(),
-                    password: $("#password").val().trim()
-                });
 
-                console.log(user);
-    
-                $.ajax({
-                    type: "POST",
-                    url: "/login/validate",
-                    data: user,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(msg) {
-                        console.log("Logged in")
-                    }
-                });
+        </div>
+    </div>
+
+
+    <script>
+
+
+
+        $("#submit_button").click(function () {
+            console.log("this is working")
+            var user = JSON.stringify({
+                email: $("#email_address").val().trim(),
+                password: $("#password").val().trim()
             });
-    
-          
+            var email = JSON.stringify({
+                email: $("#email_address").val().trim()
+            });
 
-         </script>
-      </body>
-    
+            console.log(user);
 
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/login/validate/",
+            //     data: user,
+            //     contentType: "application/json; charset=utf-8",
+            //     dataType: "json",
+            //     success: function (msg) {
+            //         return msg
+            //     }
+            // }).then(function (err, data) {
+            //     if (err) {
+            //         console.log(err)
+            //     }
+            //     console.log(data);
+            //     console.log("FUCK ME")
+            // });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/login/validate/"+$("#email_address").val().trim() ,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+                
+            }).then(function(data){
+                console.log(data)
+                if(!data){
+                    alert("No account found. Please Sign Up")
+                }else if (data.password != $("#password").val().trim()){
+                    alert("Password is incorrect")
+                }else{
+                    var userID = data.id;
+                    console.log(userID)
+                    $.ajax({
+                        type: "GET",
+                        url: "/budgets/"+userID
+                    })
+                }
+            })
+
+
+           
+        });
+
+
+
+    </script>
+</body>

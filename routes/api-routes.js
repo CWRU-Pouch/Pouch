@@ -55,31 +55,18 @@ module.exports = function (app) {
   // checks to see if there is a user with that email and password used during log in
   // if no user or incorrect password redirect to login
   // if valid redirect to their budget page '/budgets/userID'
-  app.route('/login/validate').get(sessionChecker, function (req, res) {
-    res.sendFile(__dirname + '/login')
-  }).get(function (req, res) {
+  app.route('/login/validate/:email').get(function (req, res) {
     db.users.findOne(
       {
         where:
-          { email: req.body.email }
+          { email: req.params.email }
       }).then(function (user) {
-        var enteredPassword = req.body.password;
-        if (!user) {
-          res.redirect('/signup');
-        } else if (!user.password === enteredPassword) {
-          res.redirect('/login');
-        } else {
-          req.session.user = user.dataValues;
-          // create cookie with specific userID after they sign in
-          document.cookie = "userID=" + user.ID;
-          // user.ID may need to be changed in order to retrieve the ID value --didnt know what name was for sure--
-          res.redirect('/budgets/' + user.ID);
-        }
+        res.json(user)
       })
   })
 
-  // route for user signup
-  app.route('/signup/submit').get(sessionChecker, function (req, res) {
+   // route for user signup
+   app.route('/signup/submit').get(sessionChecker, function (req, res) {
     res.sendFile(__dirname + '/signup')
   }).post(function (req, res) {
     db.users.create({
@@ -87,12 +74,25 @@ module.exports = function (app) {
       name: req.body.name,
       password: req.body.password
     }).then(function (user) {
-      document.cookie = "userID=" + user.ID;
-      req.session.user = user.dataValues;
-      res.redirect('/budgets/' + user.ID);
+      // document.cookie = "userID=" + user.ID;
+      // req.session.user = user.dataValues;
+      // res.redirect('/budgets/' + user.ID);
+      console.log("____USER DATA_____");
+      console.log(user)
+      res.json(user)
+      
     })
   })
 
+  app.route("/get/id").get(function(req,res){
+    db.users.findOne({
+      where: {
+        email:req.body.email
+      }
+    }).then(function(user) {
+      res.json(user);
+    });
+  })
 
   app.route('/signup/submit/budgets').post(function (req, res) {
     db.budgets.create({
@@ -102,15 +102,19 @@ module.exports = function (app) {
       entertainment: req.body.entertainment,
       other: req.body.other
     }).then(function (user) {
+      console.log("____BUDGET DATA_____");
+      console.log(user)
     })
   })
+ 
+
 
 
 
   // route for user's budget
-  app.get("/budgets/:userID/", function (req, res) {
-    if (req.session.user && req.cookies.user_sid) // if the session is valid load up index handlebars with information
-    {
+  app.get("/budgets/:userID", function (req, res) {
+    // if (req.session.user && req.cookies.user_sid) // if the session is valid load up index handlebars with information
+    // {
 
 
       var userInfo = {
@@ -174,9 +178,9 @@ module.exports = function (app) {
 
 
 
-    } else {
-      res.redirect('/login') // if not valid redirect to login page
-    }
+    // } else {
+    //   res.redirect('/login') // if not valid redirect to login page
+    // }
 
   });
 
