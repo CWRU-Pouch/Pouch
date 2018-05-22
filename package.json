@@ -4,7 +4,7 @@
   "description": "Group Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha || true",
     "start": "node server.js"
   },
   "repository": {
@@ -20,10 +20,14 @@
   "homepage": "https://github.com/CWRU-Pouch/Pouch#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "cookie-parser": "^1.4.3",
+    "expect.js": "^0.3.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
+    "mocha": "^5.2.0",
     "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
     "path": "^0.12.7",

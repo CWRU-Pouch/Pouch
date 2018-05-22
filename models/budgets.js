@@ -15,8 +15,13 @@ var budgets = sequelize.define("budgets", {
     allowNull: false
   },
   entertainment: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DECIMAL(10,2),
     allowNull: false,
+    validate: {
+      min: {
+        args: .01,
+        msg: "Please choose a value greater than zero"}
+    }
   },
   other: {
     type: Sequelize.INTEGER,
