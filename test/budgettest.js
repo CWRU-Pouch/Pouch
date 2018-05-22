@@ -1,7 +1,7 @@
 var chai = require("chai");
 var chaiHttp = require("chai-http");
 var budgets = require("../models/budgets");
-var users = require("../models/users")
+var user = require("../models/user")
 
 var expect = chai.expect;
 var should = chai.should();
@@ -21,7 +21,7 @@ describe("budgets", function() {
 
 describe("users", function() {
     it("Verify user model", function() {
-        expect(users.name)
+        expect(user.name)
         .to.be.a("string")
         
     })

@@ -11,17 +11,6 @@ var transactions = sequelize.define("transactions", {
       }
     }
   },
-<<<<<<< HEAD
-  categoryID: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  date: {
-    type: Sequelize.DATE,
-    allowNull: false
-  },
-=======
->>>>>>> 94b69f5cd0b09d54a0d3b2824672d35841b6f7bf
   location: {
     type: Sequelize.STRING,
     allowNull: true,

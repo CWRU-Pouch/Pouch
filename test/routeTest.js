@@ -11,14 +11,14 @@ var should = chai.should();
 
 var assert = require("chai").assert
 
-describe("GET user", function() {
-    it("retrieves user matching credentials", function(done) {
-        chai.request(server)
-            .get("/")
-            .end((err, res) => {
-                res.should.have.status(200);
-              done();
-            });
 
+describe("Validate email", function() {
+    it("Checks email to database", function(done) {
+        chai.request(server)
+            .get("/login/validate/:email")
+            .end(function(err, res) {
+                res.should.have.status(200);
+                done()
+            })
     })
 })
